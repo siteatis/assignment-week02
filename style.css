@@ -4,3 +4,47 @@
   box-sizing: border-box;
   background-color: slategray;
 }
+
+#thumbnails {
+  position: absolute;
+  display: flex;
+  overflow: scroll;
+  justify-content: center;
+  align-items: center;
+  left: 50%; /* Set left to 50% of the parent element */
+  z-index: 1;
+  transform: translateX(
+    -50%
+  ); /* Shift the element left by 50% of its own width */
+}
+
+.thumb {
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+button {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.679);
+  border-radius: 100%;
+  background-color: rgba(0, 0, 0, 0.135);
+  color: rgba(255, 255, 255, 0.679);
+  padding: 6px 10px;
+  z-index: 1;
+  cursor: pointer;
+}
+
+#prev {
+  left: 3vw;
+}
+
+#next {
+  right: 3vw;
+}
+
+#bigdisplay > img {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  object-fit: cover;
+}

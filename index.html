@@ -3,11 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Smartphone screens are usually 480px or less, but if the user wants to rotate
+     to landscape to get the "desktop experience" we should let them, then surely they
+     will have at least 640px, but the larger thumbnails are also taller and in landscape
+     they may not have enough pixels high for the thumbnails to be reasonably discreet
+     behind the fullscreen image, so large display may still be inappropriate? Hopefully
+     this addresses that? -->
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" media="(min-width: 480px)" href="style-large.css" />
+    <!-- " and min-height: 480px)" -->
+    <link
+      rel="stylesheet"
+      media="not (min-width: 480px)"
+      href="style-small.css"
+    />
+    <!-- " and min-height: 480px)" -->
+    <!-- TODO: min-height doesn't work at all and even prevents min-width from working -->
     <script src="app.js" defer></script>
     <title>Accessible Image Gallery</title>
   </head>
-  <body>
-    <h1>Image Gallery</h1>
-  </body>
+  <body></body>
 </html>

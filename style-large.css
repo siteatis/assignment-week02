@@ -1,0 +1,21 @@
+/* For displays large enough (at least 480x480) to let us use the large thumbnails */
+
+#thumbnails {
+  /* desperate times, if we flex it to row it flexes off the screen, so the first image is cut off. sorry. */
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 120px;
+  width: 400px;
+  top: 5vh;
+  bottom: auto;
+}
+
+.thumb {
+  width: 128px;
+  height: 96px;
+  padding: 2px;
+}
+
+button {
+  top: 30vh;
+}

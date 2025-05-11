@@ -18,9 +18,13 @@ const imagesData = [
 const body = document.querySelector("body");
 const thumbnails = document.createElement("section");
 const bigdisplay = document.createElement("section");
+const prev = document.createElement("button");
+const next = document.createElement("button");
 thumbnails.id = "thumbnails";
 bigdisplay.id = "bigdisplay";
-body.append(thumbnails, bigdisplay);
+prev.id = "prev";
+next.id = "next";
+body.append(thumbnails, bigdisplay, prev, next);
 
 for (imgData of imagesData) {
   let img = document.createElement("img");
@@ -29,25 +33,48 @@ for (imgData of imagesData) {
   img.classList.add("thumb"); // So we can style it later
   img.width = imgData.width;
   img.height = 128; // TODO: Isn't height/width more of a styling decision??
+  img.tabIndex = "0"; // MDN recommends not setting actual tab indices, always use 0
+  img.index = thumbnails.childNodes.length; // Lets us link back
   thumbnails.appendChild(img);
-  img.addEventListener("click", (ev) => goFullScreenWith(img));
-  // TODO: Will the click event miss people using keyboard navigation?
+  // Choose an image to go fullscreen by clicking or by pressing space when selected
+  img.addEventListener("click", () => moveTo(img.index));
+  img.addEventListener("keydown", (ev) => {
+    if (ev.key === " ") moveTo(img.index);
+  });
 }
 
-// Event handler for click on thumbnail - goes fullscreen with a giant version of it
-function goFullScreenWith(img) {
+// We're initialised, let's fire it up!
+let currIndex = 0;
+
+// Make left/right buttons and set left/right arrow keys, to scroll through images
+prev.addEventListener("click", () => move(-1));
+next.addEventListener("click", () => move(+1));
+window.addEventListener("keydown", (ev) => {
+  if (ev.key === "ArrowLeft") move(-1);
+  else if (ev.key === "ArrowRight") move(+1);
+});
+
+// Moves to this image, going fullscreen with a giant version of it
+function moveTo(index) {
+  let img = thumbnails.childNodes[index];
   bigdisplay.innerHTML = ""; // TODO: Or just change contents?
   let bigImg = document.createElement("img");
-  bigImg.classList.add("bigimage"); // So we can style it later
+  bigImg.classList.add("bigimage"); // So we can style it
   bigImg.src = img.src.slice(0, -thumbSuffix.length) + ".jpg"; // Edit src to get big image
   bigImg.alt = img.alt + " Fullscreen.";
   bigdisplay.appendChild(bigImg);
+  currIndex = index;
+}
+
+// Move +/- some distance from the current image
+function move(offset) {
+  moveTo((currIndex + offset + imagesData.length) % imagesData.length); // Ensure it wraps
 }
 
 function Img(srcHint, altText, caption, width) {
   this.srcHint = srcHint;
   this.altText = altText;
-  this.caption = caption; // Hmm, caption won't actually be displayed
+  this.caption = caption; // Hmm, caption won't actually be displayed. // TODO: or imgName?
   this.width = width;
   // No 'height' property for the thumbnails since I know they're x128 high and
   // besides there are no cases in this assignment where they'd be displayed with

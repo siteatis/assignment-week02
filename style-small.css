@@ -1,0 +1,23 @@
+/* For displays too small (not at least 480x480) to let us use the large thumbnails */
+
+#thumbnails {
+  height: 64px;
+  width: 80%; /* Display might be really small, so variable width */
+  bottom: 5vh;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  overflow: scroll;
+}
+
+.thumb {
+  width: 70px;
+  height: 50px;
+  padding: 2px;
+}
+
+button {
+  bottom: 30vh;
+}
